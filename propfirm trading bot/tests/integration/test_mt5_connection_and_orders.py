@@ -6,7 +6,7 @@ from datetime import datetime, timezone, timedelta
 import logging
 
 # Imports from your project
-from prop_firm_trading_bot.src.api_connector.mt5_adapter import MT5Adapter
+from prop_firm_trading_bot.src.api_connector.mt5_connector import MT5Adapter
 from prop_firm_trading_bot.src.config_manager import AppConfig, load_and_validate_config # For loading real config
 from prop_firm_trading_bot.src.core.enums import Timeframe, OrderType, OrderAction
 from prop_firm_trading_bot.src.core.models import AccountInfo, SymbolInfo, TickData, OHLCVData, Order, Position

@@ -9,10 +9,10 @@ import threading # For periodic tasks like state saving
 
 from prop_firm_trading_bot.src.config_manager import AppConfig
 from prop_firm_trading_bot.src.api_connector.base_connector import PlatformInterface
-from prop_firm_trading_bot.src.api_connector.mt5_adapter import MT5Adapter
+from prop_firm_trading_bot.src.api_connector.mt5_connector import MT5Adapter
 # from prop_firm_trading_bot.src.api_connector.ctrader_adapter import CTraderAdapter # When implemented
 # from prop_firm_trading_bot.src.api_connector.paper_adapter import PaperAdapter # For paper trading
-from prop_firm_trading_bot.src.market_data.market_data_manager import MarketDataManager
+from prop_firm_trading_bot.src.data_handler.market_data_manager import MarketDataManager
 from prop_firm_trading_bot.src.risk_controller.news_filter import NewsFilter
 from prop_firm_trading_bot.src.risk_controller.risk_controller import RiskController
 from prop_firm_trading_bot.src.execution.order_execution_manager import OrderExecutionManager

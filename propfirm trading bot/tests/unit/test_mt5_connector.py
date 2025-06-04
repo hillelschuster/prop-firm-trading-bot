@@ -4,7 +4,7 @@ from unittest import mock
 from datetime import datetime, timezone, timedelta
 
 # Imports from your project
-from prop_firm_trading_bot.src.api_connector.mt5_adapter import MT5Adapter
+from prop_firm_trading_bot.src.api_connector.mt5_connector import MT5Adapter
 from prop_firm_trading_bot.src.config_manager import AppConfig, PlatformSettings, MT5PlatformSettings, BotSettings
 from prop_firm_trading_bot.src.core.models import AccountInfo, SymbolInfo, TickData, OHLCVData, Order, Position
 from prop_firm_trading_bot.src.core.enums import Timeframe, OrderType, OrderAction, OrderStatus
