@@ -16,7 +16,7 @@ from ctr_api_messages.OpenApiModelMessages_pb2 import * # type: ignore
 # Ensure this is correct for your installed version.
 
 
-from prop_firm_trading_bot.src.core.platform_interface import PlatformInterface, TickCallback, BarCallback
+from prop_firm_trading_bot.src.api_connector.base_connector import PlatformInterface, TickCallback, BarCallback
 from prop_firm_trading_bot.src.core.enums import OrderType, OrderAction, Timeframe, OrderStatus, PositionStatus
 from prop_firm_trading_bot.src.core.models import (
     Order, Position, AccountInfo, OHLCVData, TickData, SymbolInfo, TradeFill
