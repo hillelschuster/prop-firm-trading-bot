@@ -231,8 +231,6 @@ class RiskController:
                 instrument_details["point_value_in_account_currency_per_lot"] = pip_val
 
         return instrument_details
-        
-        return instrument_details
 
 
     def calculate_compliant_position_size(self, 
