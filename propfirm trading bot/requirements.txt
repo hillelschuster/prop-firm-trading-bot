@@ -1,0 +1,13 @@
+MetaTrader5
+PyYAML
+pydantic
+pandas
+pandas-ta
+python-json-logger
+requests
+pytz
+# Twisted # For cTrader adapter later
+# ctrader-open-api # For cTrader adapter later
+# pytest # For running tests
+# pytest-mock # For mocking in tests
+# coverage # For test coverage reports

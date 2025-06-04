@@ -1,0 +1,17 @@
+{
+  "strategy_params_key": "TrendFollowing_EURUSD_H1_Params",
+  "description": "Trend Following SMA Crossover for EURUSD H1",
+  "strategy_definition_key": "TrendFollowing_SMA_Cross",
+  "parameters": {
+    "timeframe": "H1",
+    "fast_sma_period": 20,
+    "slow_sma_period": 50,
+    "atr_period_for_sl": 14,
+    "atr_multiplier_for_sl": 2.0,
+    "min_reward_risk_ratio": 1.5,
+    "use_trailing_stop": true,
+    "trailing_stop_atr_period": 14,
+    "trailing_stop_atr_multiplier": 1.5,
+    "max_position_age_bars": 100
+  }
+}
