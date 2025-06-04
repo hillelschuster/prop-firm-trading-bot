@@ -8,7 +8,7 @@ import logging
 import time
 
 from prop_firm_trading_bot.src.core.enums import Timeframe
-from prop_firm_trading_bot.src.core.models import OHLCVData, TickData
+from prop_firm_trading_bot.src.core.models import OHLCVData, TickData, SymbolInfo
 # Assuming PlatformInterface is correctly in base_connector
 from prop_firm_trading_bot.src.api_connector.base_connector import PlatformInterface 
 
@@ -307,6 +307,14 @@ class MarketDataManager:
             return (tick.bid + tick.ask) / 2
         else:
             self.logger.warning(f"Invalid price side '{side}' requested for {symbol}.")
+            return None
+
+    def get_symbol_info(self, symbol: str) -> Optional[SymbolInfo]:
+        """Retrieves symbol information via the platform adapter."""
+        try:
+            return self.platform_adapter.get_symbol_info(symbol)
+        except Exception as e:
+            self.logger.error(f"Failed to get symbol info for {symbol}: {e}", exc_info=True)
             return None
 
     def ensure_data_subscription(self, symbol: str, timeframe: Timeframe):
