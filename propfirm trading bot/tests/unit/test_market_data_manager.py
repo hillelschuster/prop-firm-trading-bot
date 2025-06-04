@@ -144,3 +144,17 @@ def test_calculate_and_store_indicators(tmp_path):
     df = mdm.ohlcv_data["EURUSD"][Timeframe.M1]
     assert "SMA_3" in df.columns
     assert "ATR_3" in df.columns
+
+
+def test_get_symbol_info_passthrough(tmp_path, mocker):
+    cfg = build_config(tmp_path)
+    adapter = DummyPlatform()
+    mocked = mocker.MagicMock()
+    adapter.get_symbol_info = mocked
+    mdm = MarketDataManager(config=cfg, platform_adapter=adapter, logger=logging.getLogger("test"))
+
+    mocked.return_value = "SYM"
+    result = mdm.get_symbol_info("EURUSD")
+
+    mocked.assert_called_once_with("EURUSD")
+    assert result == "SYM"
