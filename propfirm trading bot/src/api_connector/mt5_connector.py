@@ -8,7 +8,7 @@ import pytz # For timezone handling with MT5
 import uuid # For generating client_order_ids if not provided
 import threading # For polling loop
 
-from prop_firm_trading_bot.core.platform_interface import PlatformInterface
+from prop_firm_trading_bot.src.api_connector.base_connector import PlatformInterface
 from prop_firm_trading_bot.core.enums import OrderType, OrderAction, OrderStatus, PositionStatus, Timeframe
 from prop_firm_trading_bot.core.models import (
     Order, Position, AccountInfo, OHLCVData, TickData, SymbolInfo, TradeFill, MarketEvent
