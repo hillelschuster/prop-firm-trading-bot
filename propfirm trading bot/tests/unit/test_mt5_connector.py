@@ -251,10 +251,13 @@ class TestMT5AdapterDataFetching:
         mt5_mock.symbol_select.return_value = True
 
         sym_info = adapter.get_symbol_info("EURUSD")
-        
+
         assert isinstance(sym_info, SymbolInfo)
         assert sym_info.name == "EURUSD"
         assert sym_info.digits == 5
+        assert sym_info.min_volume_lots == 0.01
+        assert sym_info.max_volume_lots == 100.0
+        assert sym_info.volume_step_lots == 0.01
         assert sym_info.trade_allowed is True
         assert sym_info.platform_specific_details['spread'] == 2
 
