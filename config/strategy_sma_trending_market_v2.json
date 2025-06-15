@@ -1,0 +1,30 @@
+{
+  "strategy_params_key": "TrendFollowing_TrendingMarket_V2_Params",
+  "description": "Trend Following SMA for Trending Markets - Production V2 (Optimized for reduced noise with longer MA periods)",
+  "strategy_definition_key": "TrendFollowing_SMA_Cross",
+  "regime_metadata": {
+    "primary_regimes": ["trending", "momentum"],
+    "regime_confidence_indicators": ["trend_strength", "momentum_persistence"],
+    "optimal_market_conditions": "Sustained directional movement with clear trend",
+    "performance_attribution": "Specializes in trending markets with momentum continuation"
+  },
+  "portfolio_integration": {
+    "max_correlation_with_ranging_strategies": 0.3,
+    "max_correlation_with_volatility_strategies": 0.5,
+    "preferred_allocation_range": [0.3, 0.8],
+    "risk_scaling_factor": 1.0
+  },
+  "parameters": {
+    "timeframe": "M15",
+    "fast_sma_period": 30,
+    "slow_sma_period": 60,
+    "atr_period_for_sl": 10,
+    "atr_multiplier_for_sl": 1.8,
+    "take_profit_atr_period": 10,
+    "take_profit_atr_multiplier": 2.5,
+    "max_position_age_bars": 96
+  }
+}
+
+
+  

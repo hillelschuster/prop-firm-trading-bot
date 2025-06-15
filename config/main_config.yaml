@@ -1,0 +1,158 @@
+# config/main_config.yaml
+
+bot_settings:
+  trading_mode: "paper" # Options: paper, live
+  main_loop_delay_seconds: 10 # Reduced for more frequent checks, adjust as needed
+  app_name: "PropFirmAlgoBot"
+  ftmo_server_timezone: "Europe/Prague" # For daily loss reset calculations (FTMO CE(S)T) [cite: 1]
+
+logging:
+  level: "INFO" # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  directory: "logs"
+  file_name_prefix: "trading_bot_text" # Renamed to distinguish from potential JSON logs
+  structured_logging: true # Enable JSON logging [cite: 367]
+  json_log_file_name_prefix: "trading_bot_structured" # Prefix for JSON logs if structured_logging is true
+  max_bytes: 10485760 # 10MB per log file
+  backup_count: 7 # Number of backup log files to keep (e.g., for a week of daily logs)
+  log_format: "%(asctime)s - %(app_name)s - [%(levelname)s] - %(name)s - %(module)s.%(funcName)s:%(lineno)d - %(message)s"
+
+platform:
+  name: "MetaTrader5" # Options: MetaTrader5, cTrader
+  # --- MetaTrader 5 Settings ---
+  mt5:
+    # Credentials should be stored in environment variables for security
+    account_env_var: "MT5_ACCOUNT"
+    password_env_var: "MT5_PASSWORD"
+    server_env_var: "MT5_SERVER"
+    path: "C:\\Program Files\\FTMO Global Markets MT5 Terminal\\terminal64.exe" # FTMO-branded MT5 terminal path
+    timeout_ms: 10000 # Connection timeout
+    magic_number_default: 12345 # Default magic number for orders [cite: 480]
+    slippage_default_points: 20 # Default slippage for market orders [cite: 480]
+  # --- cTrader Settings (Placeholder) ---
+  ctrader:
+    client_id_env_var: "CTRADER_CLIENT_ID"
+    client_secret_env_var: "CTRADER_CLIENT_SECRET"
+    account_id_env_var: "CTRADER_ACCOUNT_ID" # This would be the numeric cTID Trader Account ID
+    host_type: "demo" # Options: live, demo (determines API endpoint) [cite: 485]
+    # access_token_env_var: "CTRADER_ACCESS_TOKEN" # Access token needs to be handled carefully
+
+assets_to_trade: # Renamed from 'assets' for clarity, defining which configured assets are active
+  - "EURUSD_RSI_H1_Baseline"
+  - "EURUSD_RSI_H1_Variant"
+
+asset_strategy_profiles:
+  EURUSD_RSI_H1_Baseline:
+    symbol: "EURUSD"
+    enabled: true
+    instrument_details_key: "EURUSD_FTMO"
+    strategy_params_key: "strategy_rsi_ranging_market_v1.json"
+
+  EURUSD_RSI_H1_Variant:
+    symbol: "EURUSD"
+    enabled: false
+    instrument_details_key: "EURUSD_FTMO"
+    strategy_params_key: "strategy_rsi_ranging_market_v2_controlled.json"
+
+  EURUSD_RSI_V3_TP20:
+    symbol: "EURUSD"
+    enabled: false
+    instrument_details_key: "EURUSD_FTMO"
+    strategy_params_key: "strategy_rsi_ranging_market_v3_tp20.json"
+
+  EURUSD_RSI_V4_Age24:
+    symbol: "EURUSD"
+    enabled: false
+    instrument_details_key: "EURUSD_FTMO"
+    strategy_params_key: "strategy_rsi_ranging_market_v4_age24.json"
+
+  EURUSD_RSI_M15:
+    symbol: "EURUSD"
+    enabled: false
+    instrument_details_key: "EURUSD_FTMO" # Key to lookup in instruments_ftmo.json
+    strategy_params_key: "strategy_rsi_ranging_market_v1.json" # RSI strategy for ranging markets - Production V1
+    # Overrides for risk specific to this asset-strategy combination (optional)
+    # risk_per_trade_idea_pct: 0.005
+
+  EURUSD_SMA_M15:
+    symbol: "EURUSD"
+    enabled: false
+    instrument_details_key: "EURUSD_FTMO" # Key to lookup in instruments_ftmo.json
+    strategy_params_key: "strategy_sma_trending_market_v1.json" # SMA strategy H1 V1 - Optimal baseline configuration
+    # Overrides for risk specific to this asset-strategy combination (optional)
+    # risk_per_trade_idea_pct: 0.005
+
+  EURUSD_MeanReversion_M15:
+    symbol: "EURUSD"
+    enabled: false
+    instrument_details_key: "EURUSD_FTMO" # Key to lookup in instruments_ftmo.json
+    strategy_params_key: "strategy_rsi_gbpusd_m15.json" # Use RSI strategy for mean reversion
+    # Overrides for risk specific to this asset-strategy combination (optional)
+    # risk_per_trade_idea_pct: 0.005
+
+  EURUSD_TrendFollowing_H1:
+    symbol: "EURUSD"
+    enabled: false
+    instrument_details_key: "EURUSD_FTMO"
+    strategy_params_key: "strategy_sma_eurusd_h1.json" # Use SMA strategy for trend following
+
+  EURUSD_TrendFollowing_Test:
+    symbol: "EURUSD"
+    enabled: false
+    instrument_details_key: "EURUSD_FTMO"
+    strategy_params_key: "strategy_sma_test.json" # Test strategy with smaller periods
+
+  XAUUSD_MeanReversion_M5:
+    symbol: "XAUUSD" # Gold
+    enabled: false
+    instrument_details_key: "XAUUSD_FTMO"
+    strategy_params_key: "MeanReversion_XAUUSD_M5_Params"
+
+strategy_definitions:
+  MeanReversion_RSI_BB: # Generic name for the strategy type
+    strategy_module: "src.strategies.mean_reversion_rsi" # Full import path
+    strategy_class: "MeanReversionRSI"
+    description: "Mean Reversion strategy using RSI and Bollinger Bands."
+
+  TrendFollowing_SMA_Cross: # Generic name for the strategy type
+    strategy_module: "src.strategies.trend_following_sma" # Full import path
+    strategy_class: "TrendFollowingSMA"
+    description: "Trend Following strategy using SMA crossovers."
+
+risk_management:
+  global_max_account_drawdown_pct: 0.09 # 9% (Safety buffer for FTMO's 10%) [cite: 379]
+  global_daily_drawdown_limit_pct: 0.045 # 4.5% (Safety buffer for FTMO's 5%) [cite: 378]
+  default_risk_per_trade_idea_pct: 0.01 # 1% (Global default if not overridden per asset-strategy) [cite: 380]
+  max_concurrent_trades_per_strategy_type: 2 # Max open trades for any strategy of a given type (e.g. 2 mean_reversion trades total)
+  max_total_concurrent_trades: 5       # Overall exposure limit for the bot
+
+operational_compliance:
+  min_trade_duration_seconds: 61 # To avoid HFT flags (e.g., InstantFunding <60s) [cite: 392, 3548]
+  # NOTE: Set to 20 for backtesting to allow proper strategy analysis. Revert to 4 for live trading.
+  max_orders_per_second: 20 # Throttling to stay below ~5/sec [cite: 387]
+  max_total_orders_per_day: 1800    # FTMO's limit is ~2000 [cite: 379, 386]
+  max_order_modifications_per_minute_total: 10 # Example limit
+  market_close_blackout_period_hours: 4 # For FTMO gap trading rule (Clause 5.4f) [cite: 1]
+  enforce_weekend_closure: true # If true, bot will attempt to close positions before weekend. Set false for Swing accounts. [cite: 8]
+  is_swing_account: false # Critical for news/weekend rules [cite: 1, 386]
+
+news_filter:
+  enabled: false # Set to false for FTMO Swing accounts or if not desired [cite: 1]
+  api_provider: "ForexFactoryJSON" # Options: ForexFactoryJSON, Finnhub, EODHD, JBlanked_News, Manual [cite: 84, 318]
+  api_key_env_var: "FINNHUB_API_KEY" # Example, only needed if provider requires it (e.g. Finnhub, EODHD)
+  ff_json_url: "https://cdn-nfs.faireconomy.media/ff_calendar_thisweek.json" # [cite: 35, 84]
+  min_impact_to_consider: "High" # Options: "High", "Medium", "Low" (maps to API specific values) [cite: 84]
+  pause_minutes_before_news: 3 # FTMO is 2min, extra buffer [cite: 84]
+  pause_minutes_after_news: 3  # FTMO is 2min, extra buffer [cite: 84]
+  high_impact_keywords: # For supplementing API's impact rating, or if API impact is unreliable [cite: 84, 167]
+    - "Non-Farm Payroll"
+    - "NFP"
+    - "FOMC"
+    - "Interest Rate"
+    - "CPI"
+    - "GDP"
+    - "Retail Sales"
+    - "Unemployment Rate"
+
+state_management:
+  persistence_file: "state/bot_state.json"
+  persistence_interval_seconds: 300

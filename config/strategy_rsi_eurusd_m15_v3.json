@@ -1,0 +1,21 @@
+{
+  "strategy_params_key": "MeanReversion_EURUSD_M15_Baseline_Params",
+  "description": "Mean Reversion RSI for EURUSD M15 - Historical Baseline (Phase 3 Optimization Champion)",
+  "strategy_definition_key": "MeanReversion_RSI_BB",
+  "parameters": {
+    "timeframe": "M15",
+    "rsi_period": 14,
+    "rsi_oversold": 30,
+    "rsi_overbought": 70,
+    "bollinger_period": 20,
+    "bollinger_std_dev": 2.0,
+    "stop_loss_atr_period": 10,
+    "stop_loss_atr_multiplier": 1.8,
+    "take_profit_atr_period": 10,
+    "take_profit_atr_multiplier": 2.5,
+    "max_position_age_bars": 48
+  }
+}
+
+
+  

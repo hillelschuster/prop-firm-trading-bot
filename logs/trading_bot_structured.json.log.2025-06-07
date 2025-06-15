@@ -1,0 +1,1 @@
+{"asctime": "2025-06-07 00:21:48,751", "levelname": "INFO", "name": "PropFirmAlgoBot", "module": "logging_service", "funcName": "setup_logging", "lineno": 140, "app_name": "PropFirmAlgoBot", "message": "Logging setup complete for 'PropFirmAlgoBot'. Level: INFO. File format for 'trading_bot_structured.json.log': JSON."}

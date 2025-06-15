@@ -1,0 +1,12 @@
+Backtest Report for Strategy Profile: EURUSD_RSI_H1_Baseline
+Data File: data/EURUSD_M15_2023_FULL_YEAR.csv
+Period: 2023-01-02 to 2023-12-30
+Initial Balance: 10000.00
+Final Balance: 10000.00
+Net Profit: 0.00
+Total Return: 0.00%
+Total Trades: 0
+Execution Time: 174.89s
+============================================================
+DETAILED PERFORMANCE METRICS:
+------------------------------------------------------------
